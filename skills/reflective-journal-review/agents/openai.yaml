@@ -1,0 +1,6 @@
+interface:
+  display_name: "Reflective Journal Review"
+  short_description: "Evidence-grounded daily and seven-day journal reviews"
+  default_prompt: "Use $reflective-journal-review to create a grounded daily or seven-day review from my journal entries."
+policy:
+  allow_implicit_invocation: true
