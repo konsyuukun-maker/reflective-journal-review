@@ -30,13 +30,18 @@ class SaveReviewTests(unittest.TestCase):
         self.source.write_text(self.source_content, encoding="utf-8")
         self.output = self.test_dir / "output"
 
-    def run_script(self, *arguments: object) -> subprocess.CompletedProcess[str]:
+    def run_script(
+        self,
+        *arguments: object,
+        environment: dict[str, str] | None = None,
+    ) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
             [sys.executable, str(SCRIPT), *(str(argument) for argument in arguments)],
             capture_output=True,
             check=False,
             text=True,
             encoding="utf-8",
+            env=environment,
         )
 
     def assert_rejected(self, *arguments: object) -> subprocess.CompletedProcess[str]:
@@ -69,6 +74,22 @@ class SaveReviewTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(result.stdout.strip(), str(destination))
         self.assertEqual(destination.read_bytes(), self.source.read_bytes())
+
+    def test_weekly_path_is_utf8_when_parent_encoding_is_cp1252(self) -> None:
+        environment = os.environ.copy()
+        environment["PYTHONIOENCODING"] = "cp1252"
+
+        result = self.run_script(
+            "weekly",
+            self.output,
+            "2026-03-09",
+            "2026-03-15",
+            self.source,
+            environment=environment,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("～", result.stdout)
 
     def test_existing_destination_is_not_overwritten(self) -> None:
         self.output.mkdir()

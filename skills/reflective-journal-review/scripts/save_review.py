@@ -20,6 +20,12 @@ def fail(message: str) -> None:
     raise ReviewSaveError(message)
 
 
+def configure_utf8_streams() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="strict")
+
+
 def validate_date(value: str) -> date:
     if not re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", value):
         fail("Date must use YYYY-MM-DD.")
@@ -149,6 +155,7 @@ def save_weekly(
 
 
 def main(arguments: list[str]) -> int:
+    configure_utf8_streams()
     if sys.version_info < (3, 11):
         print("Python 3.11 or newer is required.", file=sys.stderr)
         return 2
