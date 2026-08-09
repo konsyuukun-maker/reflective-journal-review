@@ -23,11 +23,15 @@ EXPECTED = [
     SOCIAL_PREVIEW,
     SKILL / "SKILL.md",
     SKILL / "agents" / "openai.yaml",
+    SKILL / "scripts" / "save_review.py",
     SKILL / "scripts" / "save_review.sh",
     SKILL / "references" / "input-resolution.md",
     SKILL / "references" / "evidence-boundaries.md",
     SKILL / "references" / "daily-review.md",
     SKILL / "references" / "weekly-review.md",
+    ROOT / "tests" / "test_save_review.py",
+    ROOT / "tests" / "test_agent_install.sh",
+    ROOT / "tests" / "verify_installed_skill.py",
 ]
 
 
@@ -54,6 +58,7 @@ if "[TODO" in skill_text:
     fail("SKILL.md still contains template TODO text")
 
 readme_text = (ROOT / "README.md").read_text(encoding="utf-8")
+readme_zh_text = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
 for asset in (WORDMARK, REFLECTION_CARDS):
     relative = asset.relative_to(ROOT).as_posix()
     if f'src="{relative}"' not in readme_text:
@@ -63,6 +68,28 @@ if not re.search(r'<img\s+src="assets/readme/wordmark\.svg"\s+alt="[^"]+"', read
     fail("wordmark image must have useful alt text")
 if not re.search(r'<img\s+src="assets/readme/reflection-cards\.svg"\s+alt="[^"]+"', readme_text):
     fail("reflection cards image must have useful alt text")
+
+required_agent_ids = (
+    "codex",
+    "claude-code",
+    "cursor",
+    "gemini-cli",
+    "github-copilot",
+    "opencode",
+)
+for agent_id in required_agent_ids:
+    if f"`{agent_id}`" not in readme_text:
+        fail(f"README.md is missing compatibility entry for {agent_id}")
+if "Agent%20Skills-Open%20Standard" not in readme_text:
+    fail("README.md is missing the open Agent Skills badge")
+if "开源 Codex Skill" in readme_zh_text:
+    fail("README.zh-CN.md still describes the project as Codex-only")
+
+skill_save_text = (SKILL / "scripts" / "save_review.py").read_text(encoding="utf-8")
+if "os.O_EXCL" not in skill_save_text:
+    fail("save_review.py must use exclusive creation for overwrite protection")
+if "save_review.py" not in skill_text or "Python 3.11" not in skill_text:
+    fail("SKILL.md must document the cross-platform Python saver")
 
 for svg_path in (WORDMARK, REFLECTION_CARDS):
     try:

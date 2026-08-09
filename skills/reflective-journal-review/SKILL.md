@@ -49,14 +49,23 @@ Never diagnose the writer, manufacture motives, or mark an idea or action comple
 
 Return the completed Markdown in the conversation by default. Save it only when the user explicitly asks or local instructions define `output_dir` as the expected destination.
 
-Stage the complete review in a regular, non-symlink source file, then run:
+Saving requires Python 3.11 or newer. Stage the complete review in a regular,
+non-symlink source file, then run the command for the current platform:
 
 ```bash
-# Daily
-bash scripts/save_review.sh daily OUTPUT_DIR YYYY-MM-DD SOURCE_FILE
+# macOS or Linux: daily
+python3 scripts/save_review.py daily OUTPUT_DIR YYYY-MM-DD SOURCE_FILE
 
-# Seven-day; START_DATE must be six days before END_DATE
-bash scripts/save_review.sh weekly OUTPUT_DIR START_DATE END_DATE SOURCE_FILE
+# macOS or Linux: seven-day
+python3 scripts/save_review.py weekly OUTPUT_DIR START_DATE END_DATE SOURCE_FILE
 ```
 
-The script creates a new file and refuses to overwrite an existing path. Do not bypass that protection. Daily filenames are `YYYY-MM-DD-SUM.md`; weekly filenames are `YYYY-MM-DD～MM-DD-7dSUM.md`.
+On Windows, use `py -3` in place of `python3`. The legacy
+`bash scripts/save_review.sh ...` interface remains available on systems with
+Bash and delegates to the same Python implementation.
+
+The script creates a new file and refuses to overwrite an existing path. Do
+not bypass that protection. If Python 3.11 or newer is unavailable, return the
+review in the conversation and explain that it could not be saved. Daily
+filenames are `YYYY-MM-DD-SUM.md`; weekly filenames are
+`YYYY-MM-DD～MM-DD-7dSUM.md`.
