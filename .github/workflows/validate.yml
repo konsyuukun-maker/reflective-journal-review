@@ -8,11 +8,66 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
       - name: Validate structure and privacy
         run: python3 tests/validate_structure.py
-      - name: Test safe review saving
+      - name: Validate shell syntax
+        run: bash -n skills/reflective-journal-review/scripts/save_review.sh tests/test_save_review.sh tests/test_agent_install.sh
+      - name: Validate the open Agent Skills specification
+        run: |
+          python3 -m pip install skills-ref==0.1.1
+          agentskills validate skills/reflective-journal-review
+
+  save:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.11", "3.13"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Test cross-platform safe review saving
+        run: python tests/test_save_review.py
+      - name: Test the legacy Bash wrapper
+        if: runner.os != 'Windows'
         run: bash tests/test_save_review.sh
+
+  install:
+    needs: validate
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - agent: codex
+            skills_dir: .agents/skills
+          - agent: claude-code
+            skills_dir: .claude/skills
+          - agent: cursor
+            skills_dir: .agents/skills
+          - agent: gemini-cli
+            skills_dir: .agents/skills
+          - agent: github-copilot
+            skills_dir: .agents/skills
+          - agent: opencode
+            skills_dir: .agents/skills
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify Skills CLI installation
+        run: bash tests/test_agent_install.sh "${{ matrix.agent }}" "${{ matrix.skills_dir }}"

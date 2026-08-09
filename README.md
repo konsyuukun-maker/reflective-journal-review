@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://github.com/konsyuukun-maker/reflective-journal-review/actions/workflows/validate.yml"><img src="https://github.com/konsyuukun-maker/reflective-journal-review/actions/workflows/validate.yml/badge.svg" alt="Validate workflow status"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-879178.svg" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/Agent%20Skill-Codex-CFA7A0.svg" alt="Agent Skill for Codex">
+  <img src="https://img.shields.io/badge/Agent%20Skills-Open%20Standard-CFA7A0.svg" alt="Open Agent Skills standard">
   <img src="https://img.shields.io/badge/Reviews-Daily%20%2B%207--day-DFCDB5.svg" alt="Daily and seven-day review modes">
 </p>
 
@@ -19,32 +19,54 @@
 
 # Turn journal entries into grounded reflection.
 
-An open-source Agent Skill that turns journal entries into evidence-grounded daily and seven-day reviews—surfacing recurring themes, shifts in thinking, and unfinished ideas without inventing a story.
+An open-source, cross-agent Skill that turns journal entries into evidence-grounded daily and seven-day reviews—surfacing recurring themes, shifts in thinking, and unfinished ideas without inventing a story. It follows the [Agent Skills open specification](https://agentskills.io/specification).
 
 Built for people who already write journals, keep Markdown notes, or practice reflective journaling and want a clearer way to observe what changes over time. The Skill works with supplied text, selected files, or an optionally configured local journal directory.
 
 ## Install
 
-Install directly into Codex with the open Agent Skills CLI:
+Install with the open [Skills CLI](https://github.com/vercel-labs/skills). Without an `--agent` option, the CLI detects installed agents and lets you choose a target:
 
 ```bash
-npx skills add konsyuukun-maker/reflective-journal-review --skill reflective-journal-review -a codex
+npx skills add konsyuukun-maker/reflective-journal-review --skill reflective-journal-review
 ```
 
-Then ask Codex to use `$reflective-journal-review` with a date and the journal material you want reviewed.
+Then ask your agent: `Use the reflective-journal-review skill to review my journal for 2026-03-14.` Codex users can also invoke it explicitly as `$reflective-journal-review`.
+
+To install the same Skill into all six CI-verified targets:
+
+```bash
+npx skills add konsyuukun-maker/reflective-journal-review --skill reflective-journal-review -a codex -a claude-code -a cursor -a gemini-cli -a github-copilot -a opencode
+```
+
+Add `--global` to make the Skill available across projects for the selected agents.
+
+## Agent compatibility
+
+One canonical Skill directory is shared across every target. The repository does not maintain agent-specific copies of the review logic.
+
+| Agent | Skills CLI ID | Verified scope |
+| --- | --- | --- |
+| Codex | `codex` | Discovery, installation, packaged resources, and safe saving |
+| Claude Code | `claude-code` | Discovery, installation, packaged resources, and safe saving |
+| Cursor | `cursor` | Discovery, installation, packaged resources, and safe saving |
+| Gemini CLI | `gemini-cli` | Discovery, installation, packaged resources, and safe saving |
+| GitHub Copilot | `github-copilot` | Discovery, installation, packaged resources, and safe saving |
+| OpenCode | `opencode` | Discovery, installation, packaged resources, and safe saving |
+
+These checks validate the open Skill package and deterministic save behavior; they do not launch, benchmark, or claim end-to-end testing against each vendor's paid model service. Other targets supported by the Skills CLI can install the same standards-based folder, but are community-compatible rather than CI-verified here.
 
 <details>
 <summary><strong>Manual installation</strong></summary>
 
-Clone the repository and copy the Skill directory into your personal Codex skills directory:
+Clone the repository and copy the canonical Skill directory into the skills directory recognized by your agent:
 
 ```bash
 git clone https://github.com/konsyuukun-maker/reflective-journal-review.git
-mkdir -p ~/.codex/skills
-cp -R reflective-journal-review/skills/reflective-journal-review ~/.codex/skills/
+cp -R reflective-journal-review/skills/reflective-journal-review /path/to/your-agent/skills/
 ```
 
-For repository-scoped use, place the Skill directory in the skills location used by that repository's agent configuration.
+Prefer the CLI when possible because it selects the correct project or global path for each supported agent.
 
 </details>
 
@@ -101,14 +123,14 @@ The Skill does not invent motives, emotions, diagnoses, or task status. An idea 
 Daily review:
 
 ```text
-Use $reflective-journal-review to review my journal for 2026-03-14.
+Use the reflective-journal-review skill to review my journal for 2026-03-14.
 Separate what I recorded from cautious observations, and do not invent missing context.
 ```
 
 Seven-day review:
 
 ```text
-Use $reflective-journal-review to create a seven-day review ending 2026-03-15
+Use the reflective-journal-review skill to create a seven-day review ending 2026-03-15
 from the files I attached. Track unfinished ideas and include their first observed dates.
 ```
 
@@ -129,7 +151,17 @@ Reviews return as Markdown in the conversation by default. Files are created onl
 - Daily: `YYYY-MM-DD-SUM.md`
 - Seven-day: `YYYY-MM-DD～MM-DD-7dSUM.md`
 
-The included save script is create-only. It rejects existing destinations, symlinks, invalid dates, empty sources, and weekly ranges other than seven calendar days.
+Saving requires Python 3.11 or newer. The included cross-platform script is create-only and rejects existing destinations, symlinks, invalid dates, empty sources, and weekly ranges other than seven calendar days:
+
+```bash
+# macOS or Linux
+python3 skills/reflective-journal-review/scripts/save_review.py daily OUTPUT_DIR YYYY-MM-DD SOURCE_FILE
+
+# Windows
+py -3 skills/reflective-journal-review/scripts/save_review.py daily OUTPUT_DIR YYYY-MM-DD SOURCE_FILE
+```
+
+The previous `bash .../save_review.sh` interface remains available on macOS and Linux and delegates to the same Python implementation. If a compatible Python runtime is unavailable, return the review in the conversation instead of bypassing the create-only protection.
 
 ## Development
 
@@ -137,10 +169,11 @@ Run the repository checks:
 
 ```bash
 python3 tests/validate_structure.py
+python3 tests/test_save_review.py
 bash tests/test_save_review.sh
 ```
 
-Before a release, also run OpenAI Skill Creator's `quick_validate.py` against `skills/reflective-journal-review`. Contributions should preserve the evidence boundaries and use fictional material only; see [CONTRIBUTING.md](CONTRIBUTING.md).
+Before a release, also run the Agent Skills reference validator and OpenAI Skill Creator's `quick_validate.py` against `skills/reflective-journal-review`. Contributions should preserve the evidence boundaries and use fictional material only; see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
