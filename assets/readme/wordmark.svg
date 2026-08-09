@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 280" role="img" aria-labelledby="title desc">
+  <title id="title">Reflective Journal Review</title>
+  <desc id="desc">A warm Japanese stationery-style wordmark on oat-colored grid paper, decorated with washi tape, a date stamp, and restrained floral marks.</desc>
+  <defs>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#665E55" stroke-width="1" opacity="0.09"/>
+    </pattern>
+    <filter id="paper-shadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#302D29" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect x="8" y="8" width="1184" height="264" rx="24" fill="#F4EBDD" stroke="#DFCDB5" stroke-width="2" filter="url(#paper-shadow)"/>
+  <rect x="8" y="8" width="1184" height="264" rx="24" fill="url(#grid)"/>
+
+  <g transform="rotate(-2 151 52)">
+    <path d="M74 30L233 24L229 72L68 77Z" fill="#DFCDB5" opacity="0.88"/>
+    <path d="M79 34L229 29" stroke="#FFF9EF" stroke-width="2" stroke-dasharray="7 6" opacity="0.75"/>
+    <text x="150" y="57" text-anchor="middle" fill="#665E55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" font-weight="650" letter-spacing="2.4">JOURNAL / 01</text>
+  </g>
+
+  <g fill="none" stroke="#879178" stroke-width="2" opacity="0.9">
+    <circle cx="1052" cy="78" r="43" stroke-dasharray="4 5"/>
+    <circle cx="1052" cy="78" r="35"/>
+    <path d="M1025 79H1079"/>
+  </g>
+  <text x="1052" y="69" text-anchor="middle" fill="#665E55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" font-weight="700" letter-spacing="1.7">DAILY</text>
+  <text x="1052" y="94" text-anchor="middle" fill="#665E55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="650" letter-spacing="1.2">7 DAYS</text>
+
+  <text x="600" y="132" text-anchor="middle" fill="#302D29" font-family="Georgia, 'Times New Roman', serif" font-size="66" font-weight="600" letter-spacing="0.6">Reflective Journal Review</text>
+  <path d="M326 154C438 144 530 160 639 150C718 143 792 150 873 146" fill="none" stroke="#CFA7A0" stroke-width="7" stroke-linecap="round" opacity="0.72"/>
+  <text x="600" y="201" text-anchor="middle" fill="#665E55" font-family="'Bradley Hand', 'Segoe Print', cursive" font-size="24" letter-spacing="1.4">Observe patterns. Understand change.</text>
+
+  <g transform="translate(111 188)" fill="none" stroke="#CFA7A0" stroke-width="2">
+    <path d="M0 15C7 3 18 3 25 15C18 27 7 27 0 15Z"/>
+    <path d="M12.5 2C24 7 25 18 12.5 27C0 18 1 7 12.5 2Z"/>
+    <circle cx="12.5" cy="15" r="3" fill="#CFA7A0" stroke="none"/>
+    <path d="M25 29C34 34 38 42 39 52" stroke="#879178"/>
+  </g>
+
+  <g fill="#879178" opacity="0.9">
+    <path d="M1090 187L1094 197L1105 198L1097 205L1099 216L1090 210L1080 216L1083 205L1075 198L1086 197Z"/>
+    <circle cx="1129" cy="228" r="4"/>
+    <circle cx="1071" cy="238" r="2.5"/>
+  </g>
+  <path d="M937 229C991 222 1041 226 1097 220" fill="none" stroke="#DFCDB5" stroke-width="14" stroke-linecap="square" opacity="0.8"/>
+  <path d="M943 229C990 225 1045 228 1090 221" fill="none" stroke="#FFF9EF" stroke-width="1.5" stroke-dasharray="6 6" opacity="0.9"/>
+</svg>

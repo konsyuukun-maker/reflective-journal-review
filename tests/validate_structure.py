@@ -1,17 +1,26 @@
 #!/usr/bin/env python3
 
 import re
+import struct
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT / "skills" / "reflective-journal-review"
+README_ASSETS = ROOT / "assets" / "readme"
+WORDMARK = README_ASSETS / "wordmark.svg"
+REFLECTION_CARDS = README_ASSETS / "reflection-cards.svg"
+SOCIAL_PREVIEW = README_ASSETS / "social-preview.png"
 
 EXPECTED = [
     ROOT / "README.md",
     ROOT / "README.zh-CN.md",
     ROOT / "LICENSE",
+    WORDMARK,
+    REFLECTION_CARDS,
+    SOCIAL_PREVIEW,
     SKILL / "SKILL.md",
     SKILL / "agents" / "openai.yaml",
     SKILL / "scripts" / "save_review.sh",
@@ -43,6 +52,41 @@ if not re.search(r"^description: .+", header, re.MULTILINE):
     fail("SKILL.md is missing a description")
 if "[TODO" in skill_text:
     fail("SKILL.md still contains template TODO text")
+
+readme_text = (ROOT / "README.md").read_text(encoding="utf-8")
+for asset in (WORDMARK, REFLECTION_CARDS):
+    relative = asset.relative_to(ROOT).as_posix()
+    if f'src="{relative}"' not in readme_text:
+        fail(f"README.md does not reference {relative} with a relative path")
+
+if not re.search(r'<img\s+src="assets/readme/wordmark\.svg"\s+alt="[^"]+"', readme_text):
+    fail("wordmark image must have useful alt text")
+if not re.search(r'<img\s+src="assets/readme/reflection-cards\.svg"\s+alt="[^"]+"', readme_text):
+    fail("reflection cards image must have useful alt text")
+
+for svg_path in (WORDMARK, REFLECTION_CARDS):
+    try:
+        ET.parse(svg_path)
+    except ET.ParseError as error:
+        fail(f"invalid SVG XML in {svg_path.relative_to(ROOT)}: {error}")
+    svg_text = svg_path.read_text(encoding="utf-8")
+    if re.search(r"<script\b", svg_text, re.IGNORECASE):
+        fail(f"script element found in {svg_path.relative_to(ROOT)}")
+    if re.search(r"(?:href|xlink:href)\s*=\s*['\"](?:https?:|//|data:)", svg_text, re.IGNORECASE):
+        fail(f"external resource found in {svg_path.relative_to(ROOT)}")
+
+cards_text = REFLECTION_CARDS.read_text(encoding="utf-8")
+if "prefers-reduced-motion: reduce" not in cards_text:
+    fail("reflection cards must support reduced motion")
+
+png_header = SOCIAL_PREVIEW.read_bytes()[:24]
+if len(png_header) != 24 or png_header[:8] != b"\x89PNG\r\n\x1a\n":
+    fail("social-preview.png is not a valid PNG")
+width, height = struct.unpack(">II", png_header[16:24])
+if (width, height) != (1280, 640):
+    fail(f"social-preview.png must be 1280x640, found {width}x{height}")
+if SOCIAL_PREVIEW.stat().st_size >= 1_000_000:
+    fail("social-preview.png must be smaller than 1 MB")
 
 openai_yaml = (SKILL / "agents" / "openai.yaml").read_text(encoding="utf-8")
 if "$reflective-journal-review" not in openai_yaml:

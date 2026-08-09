@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">Record, reflect, and track</title>
+  <desc id="desc">Three gently animated Japanese journal cards showing how raw notes become grounded reflection and follow-up tracking.</desc>
+  <defs>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.15" fill="#665E55" opacity="0.11"/>
+    </pattern>
+    <filter id="card-shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#302D29" flood-opacity="0.13"/>
+    </filter>
+    <style>
+      .paper-one { animation: paper-one 12s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+      .paper-two { animation: paper-two 12s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+      .paper-three { animation: paper-three 12s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+      .stamp { animation: stamp-in 12s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+      .pencil-line { stroke-dasharray: 150; animation: pencil-line 12s ease-in-out infinite; }
+      .tape { animation: tape-settle 12s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+
+      @keyframes paper-one {
+        0%, 8%, 22%, 100% { transform: translateY(0); }
+        14% { transform: translateY(-5px); }
+      }
+      @keyframes paper-two {
+        0%, 31%, 47%, 100% { transform: translateY(0); }
+        39% { transform: translateY(-5px); }
+      }
+      @keyframes paper-three {
+        0%, 57%, 73%, 100% { transform: translateY(0); }
+        65% { transform: translateY(-5px); }
+      }
+      @keyframes stamp-in {
+        0%, 28%, 100% { opacity: 1; transform: scale(1); }
+        34% { opacity: 0.76; transform: scale(0.97); }
+        42% { opacity: 1; transform: scale(1); }
+      }
+      @keyframes pencil-line {
+        0%, 48%, 100% { stroke-dashoffset: 0; }
+        56% { stroke-dashoffset: 150; }
+        68% { stroke-dashoffset: 0; }
+      }
+      @keyframes tape-settle {
+        0%, 70%, 100% { transform: translateY(0); opacity: 0.9; }
+        78% { transform: translateY(-4px); opacity: 0.72; }
+        86% { transform: translateY(0); opacity: 0.9; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .paper-one, .paper-two, .paper-three, .stamp, .pencil-line, .tape { animation: none !important; }
+      }
+    </style>
+  </defs>
+
+  <rect x="6" y="6" width="1188" height="418" rx="24" fill="#F8F2E8" stroke="#DFCDB5" stroke-width="2"/>
+  <rect x="6" y="6" width="1188" height="418" rx="24" fill="url(#dots)"/>
+  <path d="M386 68C410 54 427 46 455 39" fill="none" stroke="#CFA7A0" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 8" opacity="0.7"/>
+  <path d="M772 49C797 59 811 64 831 81" fill="none" stroke="#879178" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 8" opacity="0.7"/>
+
+  <g transform="rotate(-1.1 207 218)">
+    <g class="paper-one">
+      <path d="M54 83L366 77L372 345L355 350L339 345L322 351L305 346L288 351L271 346L254 352L237 347L220 352L203 347L186 352L169 347L152 353L135 348L118 353L101 348L84 353L61 347Z" fill="#FFF9EF" stroke="#DFCDB5" stroke-width="1.5" filter="url(#card-shadow)"/>
+      <path d="M93 67L221 64L225 94L89 99Z" fill="#DFCDB5" opacity="0.92"/>
+      <text x="155" y="87" text-anchor="middle" fill="#665E55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" font-weight="700" letter-spacing="1.8">MAR / 10</text>
+      <text x="88" y="144" fill="#302D29" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="600">Record</text>
+      <text x="88" y="174" fill="#66705C" font-family="'Bradley Hand', 'Segoe Print', cursive" font-size="17">keep the words as they were</text>
+      <g stroke="#665E55" stroke-width="2" opacity="0.42" stroke-linecap="round">
+        <path d="M88 218H325"/>
+        <path d="M88 249H298"/>
+        <path d="M88 280H332"/>
+        <path d="M88 311H263"/>
+      </g>
+      <g transform="translate(303 125)" fill="none" stroke="#CFA7A0" stroke-width="1.7">
+        <circle cx="0" cy="0" r="25" stroke-dasharray="3 4"/>
+        <text x="0" y="4" text-anchor="middle" fill="#CFA7A0" stroke="none" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" font-weight="700">NOTE</text>
+      </g>
+    </g>
+  </g>
+
+  <g transform="rotate(0.8 599 216)">
+    <g class="paper-two">
+      <rect x="441" y="82" width="318" height="268" rx="5" fill="#FFFDF8" stroke="#DFCDB5" stroke-width="1.5" filter="url(#card-shadow)"/>
+      <path d="M486 71L625 78L620 105L481 99Z" fill="#CFA7A0" opacity="0.7"/>
+      <path d="M668 71L726 76L722 105L663 101Z" fill="#879178" opacity="0.72"/>
+      <text x="482" y="148" fill="#302D29" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="600">Reflect</text>
+      <text x="482" y="178" fill="#665E55" font-family="'Bradley Hand', 'Segoe Print', cursive" font-size="17">notice themes and shifts</text>
+      <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" fill="#665E55">
+        <rect x="482" y="213" width="99" height="30" rx="15" fill="#F4EBDD" stroke="#DFCDB5"/>
+        <text x="531" y="233" text-anchor="middle">cadence</text>
+        <rect x="593" y="213" width="118" height="30" rx="15" fill="#EEF0E7" stroke="#879178" stroke-opacity="0.5"/>
+        <text x="652" y="233" text-anchor="middle">sustainable</text>
+      </g>
+      <path class="pencil-line" d="M486 269C525 263 573 273 615 267C653 262 685 269 717 264" fill="none" stroke="#CFA7A0" stroke-width="6" stroke-linecap="round" opacity="0.72"/>
+      <text x="485" y="307" fill="#665E55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">weekly → monthly after feedback</text>
+      <g class="stamp" transform="translate(708 320) rotate(-7)">
+        <circle cx="0" cy="0" r="24" fill="none" stroke="#879178" stroke-width="2" stroke-dasharray="3 4"/>
+        <path d="M-12 0L-4 8L13 -10" fill="none" stroke="#879178" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+  </g>
+
+  <g transform="rotate(-0.7 994 217)">
+    <g class="paper-three">
+      <rect x="829" y="78" width="318" height="274" rx="4" fill="#FFF9EF" stroke="#DFCDB5" stroke-width="1.5" filter="url(#card-shadow)"/>
+      <g class="tape">
+        <path d="M915 65L1051 68L1047 100L910 96Z" fill="#879178" opacity="0.78"/>
+        <path d="M920 70L1046 72" stroke="#FFF9EF" stroke-width="1.5" stroke-dasharray="6 6" opacity="0.75"/>
+      </g>
+      <text x="872" y="147" fill="#302D29" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="600">Track</text>
+      <text x="872" y="177" fill="#9A6964" font-family="'Bradley Hand', 'Segoe Print', cursive" font-size="17">keep unfinished ideas visible</text>
+      <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" fill="#665E55">
+        <rect x="872" y="210" width="19" height="19" rx="3" fill="none" stroke="#879178" stroke-width="2"/>
+        <path d="M876 219L881 224L889 214" fill="none" stroke="#879178" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="906" y="225">Ask two neighbors</text>
+        <rect x="872" y="253" width="19" height="19" rx="3" fill="none" stroke="#CFA7A0" stroke-width="2"/>
+        <text x="906" y="268">Choose the first book</text>
+        <rect x="872" y="296" width="19" height="19" rx="3" fill="none" stroke="#CFA7A0" stroke-width="2"/>
+        <text x="906" y="311">Send the invitation</text>
+      </g>
+      <path d="M1110 319C1097 301 1092 286 1096 269C1100 253 1111 242 1129 235" fill="none" stroke="#879178" stroke-width="1.8"/>
+      <path d="M1117 245C1123 238 1128 233 1137 229C1135 238 1130 244 1122 249Z" fill="#879178" opacity="0.78"/>
+    </g>
+  </g>
+
+  <g transform="translate(398 365)" fill="none" stroke="#CFA7A0" stroke-width="1.6" opacity="0.85">
+    <path d="M0 10C5 2 13 2 18 10C13 18 5 18 0 10Z"/>
+    <path d="M9 0C17 4 18 12 9 20C0 12 1 4 9 0Z"/>
+    <circle cx="9" cy="10" r="2.3" fill="#CFA7A0" stroke="none"/>
+  </g>
+  <text x="600" y="397" text-anchor="middle" fill="#665E55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" letter-spacing="2.2">EVIDENCE FIRST · NO INVENTED STORY</text>
+</svg>
